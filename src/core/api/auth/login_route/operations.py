@@ -1,6 +1,6 @@
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
-from core.api.auth.login.schemas import LoginForm
+from core.api.auth.login_route.schemas import LoginForm
 from core.database.models.users import User
 from core.utils.pwd_hash import verify_password
 from core.utils.tokens import create_access_token

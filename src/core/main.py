@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 
-from core.api.auth.login.endpoints import router as login_router
-from core.api.auth.register.endpoints import router as register_router
+from core.api.auth.login_route.endpoints import router as login_router
+from core.api.auth.register_route.endpoints import router as register_router
 
 title = "DEPRA - Deprecation Enforcement Proxy for retired APIs"
 
