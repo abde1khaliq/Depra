@@ -1,7 +1,7 @@
 
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
-from api.auth.register_route.schemas import RegisterationForm
+from api.register_route.schemas import RegisterationForm
 from database.models.users import User
 from utils.pwd_hash import hash_password
 

@@ -1,7 +1,7 @@
 from ast import main
 from fastapi import FastAPI
-from api.auth.login_route.endpoints import router as login_router
-from api.auth.register_route.endpoints import router as register_router
+from api.login_route.endpoints import router as login_router
+from api.register_route.endpoints import router as register_router
 import uvicorn
 
 title = "DEPRA - Deprecation Enforcement Proxy for retired APIs"
