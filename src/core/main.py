@@ -1,5 +1,7 @@
 from fastapi import FastAPI
 
+from core.api.auth.login.endpoints import router as login_router
+
 title = "DEPRA - Deprecation Enforcement Proxy for retired APIs"
 
 description = """
@@ -17,3 +19,4 @@ and enforces hard cutoffs automatically. The API Company configures it once and 
 """
 
 app = FastAPI(title=title, description=description, summary=summary)
+app.include_router(login_router, prefix="/auth", tags=['auth'])
