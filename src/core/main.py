@@ -1,7 +1,8 @@
+from ast import main
 from fastapi import FastAPI
-
 from api.auth.login_route.endpoints import router as login_router
 from api.auth.register_route.endpoints import router as register_router
+import uvicorn
 
 title = "DEPRA - Deprecation Enforcement Proxy for retired APIs"
 
@@ -22,3 +23,6 @@ and enforces hard cutoffs automatically. The API Company configures it once and 
 app = FastAPI(title=title, description=description, summary=summary)
 app.include_router(login_router, prefix="/auth", tags=['authentication'])
 app.include_router(register_router, prefix="/auth", tags=['authentication'])
+
+if __name__ == "__main__":
+    uvicorn.run('main:app', port=8000, reload=True)
