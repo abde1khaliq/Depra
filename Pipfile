@@ -29,6 +29,7 @@ fastapi = "*"
 sqlalchemy = "*"
 python-jose = "*"
 passlib = {extras = ["argon2"], version = "*"}
+alembic = "*"
 
 [dev-packages]
 
