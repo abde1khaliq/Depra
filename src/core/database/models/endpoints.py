@@ -28,4 +28,4 @@ class Endpoint(Base):
     owner_id = Column(Integer, ForeignKey("users.id"), nullable=False)
 
     # Relationship to User
-    owner = relationship("User", back_populates="entrypoints")
+    owner = relationship("User", back_populates="endpoints")
