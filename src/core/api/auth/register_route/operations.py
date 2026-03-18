@@ -1,10 +1,9 @@
 
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
-from core.api.auth.register_route.schemas import RegisterationForm
-from core.database.models.users import User
-from core.utils.pwd_hash import hash_password
-
+from api.auth.register_route.schemas import RegisterationForm
+from database.models.users import User
+from utils.pwd_hash import hash_password
 
 def create_user(db: Session, form: RegisterationForm):
     user_exists = db.query(User).filter(User.email == form.email).first()

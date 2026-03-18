@@ -1,9 +1,9 @@
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
-from core.api.auth.login_route.schemas import LoginForm
-from core.database.models.users import User
-from core.utils.pwd_hash import verify_password
-from core.utils.tokens import create_access_token
+from api.auth.login_route.schemas import LoginForm
+from database.models.users import User
+from utils.pwd_hash import verify_password
+from utils.tokens import create_access_token
 
 def authenticate(db: Session, form: LoginForm):
     user = db.query(User).filter(User.email == form.email).first()
