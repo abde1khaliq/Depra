@@ -1,4 +1,3 @@
-from ast import main
 from fastapi import FastAPI
 from api.login_route.endpoints import router as login_router
 from api.register_route.endpoints import router as register_router
