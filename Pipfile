@@ -30,6 +30,7 @@ python-jose = "*"
 passlib = {extras = ["argon2"], version = "*"}
 alembic = "*"
 pydantic = {extras = ["email"], version = "*"}
+textual = "*"
 
 [dev-packages]
 
