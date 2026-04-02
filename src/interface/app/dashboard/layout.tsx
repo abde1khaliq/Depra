@@ -79,7 +79,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 <Command size={14} color="#374151" strokeWidth={2} />
               </Box>
               <Text fontSize="sm" fontWeight="medium" color="gray.800" letterSpacing="tight">
-                Payd Prod
+              DEPRA
               </Text>
             </Flex>
             <ChevronsUpDown size={14} color="#9CA3AF" />

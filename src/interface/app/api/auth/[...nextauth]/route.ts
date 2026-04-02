@@ -1,57 +1,67 @@
-// app/api/auth/[...nextauth]/route.ts
-import NextAuth, { NextAuthOptions } from "next-auth";
+import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { jwtDecode } from "jwt-decode";
+import { JWT } from "next-auth/jwt";
+import { Session } from "next-auth";
 
-export const authOptions: NextAuthOptions = {
-  session: { strategy: "jwt" },
+export const authOptions = {
   providers: [
     CredentialsProvider({
+      name: "Credentials",
       credentials: {
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) return null;
+        const response = await fetch(
+          `http://127.0.0.1:8000/auth/login/`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              email: credentials?.email,
+              password: credentials?.password,
+            }),
+          },
+        );
 
-        const payload = {
-          email: credentials.email,
-          password: credentials.password,
-        };
+        const data = await response.json();
 
-        const res = await fetch("http://127.0.0.1:8000/auth/login", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
+        if (response.ok && data?.access) {
+          const decoded: any = jwtDecode(data.access);
 
-        if (!res.ok) return null;
+          return {
+            id: decoded.user_id,
+            email: credentials?.email,
+            accessToken: data.access,
+            refreshToken: data.refresh,
+          };
+        }
 
-        const data = await res.json();
-
-        return {
-          id: credentials.email,
-          accessToken: data.access_token,
-        };
+        return null;
       },
     }),
   ],
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user }: { token: JWT; user?: any }) {
       if (user) {
-        token.accessToken = (user as any).accessToken;
+        token.accessToken = user.accessToken;
+        token.refreshToken = user.refreshToken;
+        token.id = user.id;
       }
       return token;
     },
-    async session({ session, token }) {
-
-      if (session.user) {
-        (session.user as any).accessToken = token.accessToken;
-      }
+    async session({ session, token }: { session: Session; token: JWT }) {
+      session.user.id = token.id as string;
+      session.accessToken = token.accessToken as string;
+      session.refreshToken = token.refreshToken as string;
       return session;
     },
   },
-  pages: { signIn: "/login" },
-  secret: process.env.NEXTAUTH_SECRET,
+
+  pages: {
+    signIn: "/login",
+  },
 };
 
 const handler = NextAuth(authOptions);

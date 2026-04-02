@@ -1,8 +1,8 @@
-"""Create Endpoints model
+"""Remove database enums
 
-Revision ID: 819bda584c80
-Revises: cf2bf2070bc8
-Create Date: 2026-03-18 20:40:32.398295
+Revision ID: 03880a725e50
+Revises: 4fe35f436de6
+Create Date: 2026-04-02 18:05:19.123768
 
 """
 from typing import Sequence, Union
@@ -12,8 +12,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = '819bda584c80'
-down_revision: Union[str, Sequence[str], None] = 'cf2bf2070bc8'
+revision: str = '03880a725e50'
+down_revision: Union[str, Sequence[str], None] = '4fe35f436de6'
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 

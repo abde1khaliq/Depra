@@ -14,8 +14,8 @@ def authenticate(db: Session, form: LoginForm):
     if not verify_password(form.password, user.password):
         raise HTTPException(status_code=400, detail="Invalid email or password.")
     
-    access_token = create_access_token(
+    access = create_access_token(
         data={'user_id': user.id, "email": user.email}
     )
 
-    return { 'access_token' : access_token }
+    return { 'access' : access, "refresh": ''}
