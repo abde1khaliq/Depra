@@ -6,7 +6,6 @@ export const authOptions: NextAuthOptions = {
   session: { strategy: "jwt" },
   providers: [
     CredentialsProvider({
-      name: "Depra Admin",
       credentials: {
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
@@ -14,38 +13,37 @@ export const authOptions: NextAuthOptions = {
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) return null;
 
-        // In production, this calls your actual DEPRA backend
-        // const res = await fetch(`${process.env.BACKEND_URL}/auth/login`, {
-        //   method: 'POST',
-        //   body: JSON.stringify(credentials),
-        //   headers: { "Content-Type": "application/json" }
-        // });
-        // const user = await res.json();
+        const payload = {
+          email: credentials.email,
+          password: credentials.password,
+        };
 
-        // MOCK SUCCESS: Returning a mock user + backend JWT
-        if (credentials.email === "admin@payd.com" && credentials.password === "password123") {
-          return {
-            id: "1",
-            name: "Admin",
-            email: credentials.email,
-            // This is the key you got from your backend
-            backendJwt: "depra_bk_eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." 
-          };
-        }
-        return null;
+        const res = await fetch("http://127.0.0.1:8000/auth/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+
+        if (!res.ok) return null;
+
+        const data = await res.json();
+
+        return {
+          id: credentials.email,
+          accessToken: data.access_token,
+        };
       },
     }),
   ],
   callbacks: {
     async jwt({ token, user }) {
-      // Step 1: When user logs in, attach the backendJwt to the NextAuth JWT
       if (user) {
-        token.accessToken = (user as any).backendJwt;
+        token.accessToken = (user as any).accessToken;
       }
       return token;
     },
     async session({ session, token }) {
-      // Step 2: Make that token available to the frontend hooks
+
       if (session.user) {
         (session.user as any).accessToken = token.accessToken;
       }
