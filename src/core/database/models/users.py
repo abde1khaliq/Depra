@@ -2,6 +2,7 @@ from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
 from database.session import Base
 
+
 class User(Base):
     __tablename__ = "users"
 
@@ -12,4 +13,4 @@ class User(Base):
     email = Column(String, unique=True, nullable=False)
     password = Column(String, nullable=False)
 
-    endpoints = relationship("Endpoint", back_populates="owner")
+    policies = relationship("Policy", back_populates="policies")

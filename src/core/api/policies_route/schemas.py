@@ -1,7 +1,8 @@
 from datetime import datetime
 from pydantic import BaseModel
 
-class EndpointForm(BaseModel):
+
+class PolicyForm(BaseModel):
     name: str
     status: str
     expiry_date: datetime

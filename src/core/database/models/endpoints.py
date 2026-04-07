@@ -3,8 +3,9 @@ from sqlalchemy.orm import relationship
 from database.session import Base
 import enum
 
-class Endpoint(Base):
-    __tablename__ = "endpoints"
+
+class Policy(Base):
+    __tablename__ = "policies"
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, unique=True, nullable=False, index=True)
@@ -18,4 +19,4 @@ class Endpoint(Base):
     owner_id = Column(Integer, ForeignKey("users.id"), nullable=False)
 
     # Relationship to User
-    owner = relationship("User", back_populates="endpoints")
+    owner = relationship("User", back_populates="policies")

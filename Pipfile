@@ -32,6 +32,7 @@ alembic = "*"
 pydantic = {extras = ["email"], version = "*"}
 textual = "*"
 pyfiglet = "*"
+requests = "*"
 
 [dev-packages]
 
